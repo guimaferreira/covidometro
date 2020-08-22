@@ -1,6 +1,6 @@
 import Head from "next/head";
-import styles from "./layout.module.sass";
-import utilsStyles from "../styles/utils.module.sass";
+import styles from "./Layout.module.sass";
+import utilsStyles from "../../styles/utils.module.sass";
 import Box from "@material-ui/core/Box";
 
 export const appTitle = "COVIDOMETRO.com";
