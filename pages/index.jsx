@@ -7,7 +7,7 @@ import utilsStyles from "../styles/utils.module.sass";
 
 export default function Home({ allPostsData }) {
     return (
-        <Layout home>
+        <Layout>
             <Head>
                 <title>{appTitle}</title>
             </Head>
