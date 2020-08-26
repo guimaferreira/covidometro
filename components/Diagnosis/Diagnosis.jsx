@@ -11,6 +11,7 @@ import {
     ResponsiveContainer,
     AreaChart,
     Area,
+    Legend,
     XAxis,
     YAxis,
     Tooltip
@@ -181,6 +182,21 @@ export default function Diagnosis({}) {
                                     domain={["dataMin", "dataMax"]}
                                 />
                                 <Tooltip />
+                                <Legend
+                                    // payload={[
+                                    //     {
+                                    //         value: "Real",
+                                    //         type: "line"
+                                    //     },
+                                    //     {
+                                    //         value: "Previsão",
+                                    //         type: "line"
+                                    //     }
+                                    // ]}
+                                    verticalAlign="bottom"
+                                    height={24}
+                                    iconType="plainline"
+                                />
                                 <Area
                                     data={chartData.filter(
                                         (d) => d.type == "Real"
@@ -190,6 +206,7 @@ export default function Diagnosis({}) {
                                     stroke={needleColor}
                                     activeDot={{ r: 1 }}
                                     fill="url(#colorUv)"
+                                    name="Real"
                                 />
                                 <Area
                                     data={chartData.filter(
@@ -204,6 +221,7 @@ export default function Diagnosis({}) {
                                     activeDot={{ r: 1 }}
                                     fill="url(#colorUv)"
                                     strokeDasharray="4 4"
+                                    name="Previsão"
                                 />
                             </AreaChart>
                         </ResponsiveContainer>
