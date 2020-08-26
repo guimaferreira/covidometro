@@ -3,7 +3,6 @@ import Layout, { appTitle } from "../components/Layout/Layout";
 import TextField from "@material-ui/core/TextField";
 import Diagnosis from "../components/Diagnosis/Diagnosis";
 import styles from "../styles/Home.module.sass";
-import utilsStyles from "../styles/utils.module.sass";
 
 export default function Home({ allPostsData }) {
     return (

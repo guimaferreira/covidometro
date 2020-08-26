@@ -16,9 +16,6 @@ export default function Kpi({ children, round, type, value }) {
                 <Typography variant="h5" component="h2">
                     {valueLabel}
                 </Typography>
-                {/* <Typography className={styles.pos} color="textSecondary">
-                    {children}
-                </Typography> */}
             </CardContent>
         </Card>
     );

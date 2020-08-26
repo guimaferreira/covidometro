@@ -30,8 +30,9 @@ export default function DiagnosisDescription({ deltas }) {
     return (
         <Typography>
             <p>
-                O índice atual de óbitos por COVID-19 está {deltaDescription}{" "}
-                que o índice de {benchmarking} em {city} no ano de 2018.
+                O índice atual de óbitos por COVID-19 está{" "}
+                <strong>{deltaDescription}</strong> que o índice de{" "}
+                {benchmarking} em {city} no ano de 2018.
             </p>
         </Typography>
     );
