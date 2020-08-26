@@ -8,19 +8,15 @@ export default function Kpi({ children, type, value }) {
     return (
         <Card className={styles.root} variant="outlined">
             <CardContent>
-                <Typography
-                    className={styles.title}
-                    color="textSecondary"
-                    gutterBottom
-                >
-                    {type}
+                <Typography className={styles.title} color="textSecondary">
+                    {children}
                 </Typography>
                 <Typography variant="h5" component="h2">
                     {Math.round(value)}
                 </Typography>
-                <Typography className={styles.pos} color="textSecondary">
+                {/* <Typography className={styles.pos} color="textSecondary">
                     {children}
-                </Typography>
+                </Typography> */}
             </CardContent>
         </Card>
     );

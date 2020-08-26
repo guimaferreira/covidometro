@@ -1,7 +1,79 @@
 @import "../../styles/variables.sass"
 
 .container
-    padding: $padding
+    margin-bottom: 80px
+    padding: 0 $padding
 
-    .MuiSlider-valueLabel
-        font-size: 0.5rem !important
+    h1
+        margin: $margin 0
+        text-align: center
+
+.spaced-container
+    padding: 0 $padding
+
+.normal 
+    h1, h2
+        color: $normal
+
+    .MuiSliderValueLabel span
+        background-color: $normal
+
+.controlled
+    h1, h2
+        color: $controlled
+
+    .MuiSliderValueLabel span, span.filled
+        background-color: $controlled
+
+.serious
+    h1, h2
+        color: $serious
+
+    .MuiSliderValueLabel span, span.filled
+        background-color: $serious
+
+.critical
+    h1, h2
+        color: $critical
+
+    .MuiSliderValueLabel span, .MuiSliderThumb, .MuiSliderTrack
+        background-color: $critical
+
+.tragic
+    h1, h2
+        color: $tragic
+
+    .MuiSliderValueLabel span
+        background-color: $tragic
+
+.MuiSliderValueLabel
+    font-size: 0.5rem !important
+
+.MuiSliderThumb
+    height: 28px
+    width: 28px
+
+.chart
+    font-size: 0.5rem
+
+.slider
+    background: $background
+    bottom: 0
+    left: 0
+    overflow: visible !important
+    padding: $padding/2 $padding*2
+    position: fixed
+    right: 0
+    z-index: 100
+
+.text
+    padding: 0 $padding
+
+    p
+        font-size: 0.75rem
+
+    span.filled
+        border-radius: 4px
+        padding: 0.15rem 0.25rem
+    
+// .MuiSliderTrack
