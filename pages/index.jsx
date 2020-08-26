@@ -4,7 +4,8 @@ import TextField from "@material-ui/core/TextField";
 import Diagnosis from "../components/Diagnosis/Diagnosis";
 import styles from "../styles/Home.module.sass";
 
-export default function Home({ allPostsData }) {
+export default function Home({}) {
+    const city = "Cláudio, MG";
     return (
         <Layout>
             <Head>
@@ -16,11 +17,11 @@ export default function Home({ allPostsData }) {
                     label="Qual sua cidade?"
                     size="small"
                     fullWidth
-                    defaultValue="Cláudio, MG"
+                    defaultValue={city}
                 />
             </header>
             <section>
-                <Diagnosis />
+                <Diagnosis city={city} />
             </section>
         </Layout>
     );
