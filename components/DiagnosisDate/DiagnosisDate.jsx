@@ -15,10 +15,7 @@ export default function DiagnosisDate({ date, type }) {
     return (
         <Typography>
             <strong>
-                <span className={`${utilsStyles.label} label`}>
-                    {typeValue}
-                </span>{" "}
-                {dateFormatted}
+                <span>{typeValue}</span> {dateFormatted}
             </strong>
         </Typography>
     );

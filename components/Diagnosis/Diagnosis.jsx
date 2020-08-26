@@ -13,12 +13,9 @@ import {
     Area,
     XAxis,
     YAxis,
-    CartesianGrid,
-    Tooltip,
-    Legend
+    Tooltip
 } from "recharts";
 import styles from "./Diagnosis.module.sass";
-import utilsStyles from "../../styles/utils.module.sass";
 import Grid from "@material-ui/core/Grid";
 import Kpi from "../Kpi/Kpi";
 import { Typography } from "@material-ui/core";
@@ -211,6 +208,25 @@ export default function Diagnosis({}) {
                             </AreaChart>
                         </ResponsiveContainer>
                     </div>
+                </Typography>
+                <Typography>
+                    <span className={styles.disclaimer}>
+                        <strong>Aviso Legal</strong>
+                        <br />
+                        <em>
+                            Esta é uma versão experimental não oficial do
+                            COVIDOMETRO.com, as informações desta versão podem
+                            sofrer alterações sem qualquer aviso prévio.
+                        </em>
+                        <br />
+                        Os dados reais foram extraídos dos boletins da
+                        Prefeitura no Instagram, as previsões estatísticas foram
+                        baseadas nestes dados.
+                        <br />
+                        Os dados de comparação com os óbitos de 2018 foram
+                        feitos de acordo com o relatório anual de mortalidade no
+                        Brasil (DataSUS, 2018).
+                    </span>
                 </Typography>
             </div>
         </div>
