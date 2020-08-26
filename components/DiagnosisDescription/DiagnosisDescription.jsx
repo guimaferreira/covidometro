@@ -21,7 +21,7 @@ export default function DiagnosisDescription({ deltas }) {
         if (delta < 0) {
             comparation = " menor";
 
-            if (delta >= -0.3) deltaDescription = `apenas ${deltaDescription}`;
+            if (delta >= -0.35) deltaDescription = `apenas ${deltaDescription}`;
         }
 
         deltaDescription += comparation;

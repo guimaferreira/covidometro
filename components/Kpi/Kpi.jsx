@@ -4,7 +4,9 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import styles from "./Kpi.module.sass";
 
-export default function Kpi({ children, type, value }) {
+export default function Kpi({ children, round, type, value }) {
+    const valueLabel = round ? Math.round(value) : value;
+
     return (
         <Card className={styles.root} variant="outlined">
             <CardContent>
@@ -12,7 +14,7 @@ export default function Kpi({ children, type, value }) {
                     {children}
                 </Typography>
                 <Typography variant="h5" component="h2">
-                    {Math.round(value)}
+                    {valueLabel}
                 </Typography>
                 {/* <Typography className={styles.pos} color="textSecondary">
                     {children}
