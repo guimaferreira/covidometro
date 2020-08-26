@@ -1,5 +1,6 @@
 import _ from "lodash";
-import { format } from "date-fns";
+import { format, formatDistanceStrict } from "date-fns";
+import ptBR from "date-fns/locale/pt-BR";
 import React, { useState } from "react";
 import Card from "@material-ui/core/Card";
 import DiagnosisDate from "../DiagnosisDate/DiagnosisDate";
@@ -21,6 +22,7 @@ import utilsStyles from "../../styles/utils.module.sass";
 import Grid from "@material-ui/core/Grid";
 import Kpi from "../Kpi/Kpi";
 import { Typography } from "@material-ui/core";
+import DateLocal from "../../helpers/DateLocal.helper";
 
 const data = require("../../public/data/mg-claudio.json");
 
@@ -51,23 +53,24 @@ export default function Diagnosis({}) {
     const styleColor = styles[stylesColors[colorIndex]];
 
     const sliderLabelFormat = (value) => {
-        // TODO: Usar timezone
-        return format(current.date + 3 * 60 * 60 * 1000, "dd/MM");
+        return format(DateLocal(current.date), "dd/MM");
     };
 
     const chartXTickFormat = (date) => {
         return format(date, "dd/MM");
     };
 
+    const getTime = (time) => {
+        if (!time) return null;
+
+        return formatDistanceStrict(0, time, { locale: ptBR });
+    };
+
+    const casesTime = getTime(current.cases_time),
+        deathsTime = getTime(current.deaths_time);
+
     return (
         <div className={`${styles.container} ${styleColor}`}>
-            <div className={styles.text}>
-                <DiagnosisDate
-                    className={styles.text}
-                    date={current.date}
-                    type={current.type}
-                />
-            </div>
             <h1>Mortalidade {current.deaths_situation}</h1>
             <GaugeChart
                 id="gauge-chart1"
@@ -76,7 +79,6 @@ export default function Diagnosis({}) {
                 marginInPercent={0.06}
                 arcPadding={0.02}
                 colors={colors}
-                textColor="#000000"
                 arcWidth={0.4}
                 cornerRadius={4}
                 percent={current.deaths_gauge}
@@ -85,17 +87,18 @@ export default function Diagnosis({}) {
                 needleBaseColor={needleColor}
             />
             <div className={styles.text}>
+                <DiagnosisDate date={current.date} type={current.type} />
                 <DiagnosisDescription deltas={current.deaths_index_delta} />
             </div>
             <Grid container spacing={2}>
                 <Grid item xs={6}>
-                    <Kpi type={current.type} value={current.cases_time}>
+                    <Kpi type={current.type} value={casesTime}>
                         1 caso a cada
                     </Kpi>
                 </Grid>
                 <Grid item xs={6}>
-                    <Kpi type={current.type} value={current.deaths_time}>
-                        1 óbito a cada
+                    <Kpi type={current.type} value={deathsTime || "."}>
+                        {deathsTime ? "1 óbito a cada" : "Nenhum óbito"}
                     </Kpi>
                 </Grid>
             </Grid>
@@ -104,7 +107,7 @@ export default function Diagnosis({}) {
                     <Kpi
                         type={current.type}
                         value={current.cases_cum}
-                        rount={true}
+                        round={true}
                     >
                         Casos
                     </Kpi>
@@ -113,7 +116,7 @@ export default function Diagnosis({}) {
                     <Kpi
                         type={current.type}
                         value={current.deaths_cum}
-                        rount={true}
+                        round={true}
                     >
                         Óbitos
                     </Kpi>
