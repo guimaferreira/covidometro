@@ -11,7 +11,7 @@ export default function Home({ allPostsData }) {
             <Head>
                 <title>{appTitle}</title>
             </Head>
-            <header className={utilsStyles.padding}>
+            <header className={styles.header}>
                 <TextField
                     variant="outlined"
                     label="Qual sua cidade?"

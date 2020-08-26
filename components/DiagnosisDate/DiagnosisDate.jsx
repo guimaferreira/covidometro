@@ -13,7 +13,7 @@ export default function DiagnosisDate({ date, type }) {
     // TODO: Style {typeValue}
     return (
         <Typography>
-            <span>{typeValue}</span>, {dateFormatted}{" "}
+            <span className="filled">{typeValue}</span>, {dateFormatted}{" "}
         </Typography>
     );
 }

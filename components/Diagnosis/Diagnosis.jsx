@@ -1,14 +1,15 @@
 import _ from "lodash";
 import { format } from "date-fns";
 import React, { useState } from "react";
+import Card from "@material-ui/core/Card";
 import DiagnosisDate from "../DiagnosisDate/DiagnosisDate";
 import DiagnosisDescription from "../DiagnosisDescription/DiagnosisDescription";
 import Slider from "@material-ui/core/Slider";
 import GaugeChart from "react-gauge-chart-nextjs-support";
 import {
     ResponsiveContainer,
-    LineChart,
-    Line,
+    AreaChart,
+    Area,
     XAxis,
     YAxis,
     CartesianGrid,
@@ -19,6 +20,7 @@ import styles from "./Diagnosis.module.sass";
 import utilsStyles from "../../styles/utils.module.sass";
 import Grid from "@material-ui/core/Grid";
 import Kpi from "../Kpi/Kpi";
+import { Typography } from "@material-ui/core";
 
 const data = require("../../public/data/mg-claudio.json");
 
@@ -31,24 +33,47 @@ export default function Diagnosis({}) {
     const [epoch, setEpoch] = useState(currentIndex);
 
     const current = diagnosisData[epoch];
-    const chartData = data; //data.slice(epoch - 15, epoch + 14);
 
+    const chartData = data.slice(0, startIndex + epoch);
+
+    const situations = ["Normal", "Controlada", "Grave", "Crítica", "Trágica"];
+    const colorIndex = situations.indexOf(current.deaths_situation);
     const colors = ["#02bbd4", "#ffc009", "#ff5723", "#e91e63", "#9b27af"];
-    const needleColor = colors[Math.floor(current.deaths_gauge * 5)];
+    const needleColor = colors[colorIndex];
+
+    const stylesColors = [
+        "normal",
+        "controlled",
+        "serious",
+        "critical",
+        "tragic"
+    ];
+    const styleColor = styles[stylesColors[colorIndex]];
 
     const sliderLabelFormat = (value) => {
-        return format(current.date, "dd/MM");
+        // TODO: Usar timezone
+        return format(current.date + 3 * 60 * 60 * 1000, "dd/MM");
+    };
+
+    const chartXTickFormat = (date) => {
+        return format(date, "dd/MM");
     };
 
     return (
-        <div className={styles.container}>
-            <DiagnosisDate date={current.date} type={current.type} />
+        <div className={`${styles.container} ${styleColor}`}>
+            <div className={styles.text}>
+                <DiagnosisDate
+                    className={styles.text}
+                    date={current.date}
+                    type={current.type}
+                />
+            </div>
             <h1>Mortalidade {current.deaths_situation}</h1>
             <GaugeChart
                 id="gauge-chart1"
-                animDelay={0}
+                animDelay={100}
                 nrOfLevels={5}
-                marginInPercent={0.04}
+                marginInPercent={0.06}
                 colors={colors}
                 textColor="#000000"
                 arcWidth={0.3}
@@ -58,54 +83,109 @@ export default function Diagnosis({}) {
                 needleColor={needleColor}
                 needleBaseColor={needleColor}
             />
-            <Slider
-                value={epoch}
-                min={0}
-                max={diagnosisData.length - 1}
-                valueLabelDisplay="on"
-                valueLabelFormat={sliderLabelFormat}
-                onChange={(ev, value) => setEpoch(value)}
-            />
-            <DiagnosisDescription deltas={current.deaths_index_delta} />
+            <div className={styles.text}>
+                <DiagnosisDescription deltas={current.deaths_index_delta} />
+            </div>
             <Grid container spacing={2}>
                 <Grid item xs={6}>
                     <Kpi type={current.type} value={current.cases_cum}>
-                        casos confirmados
+                        Casos
                     </Kpi>
                 </Grid>
                 <Grid item xs={6}>
                     <Kpi type={current.type} value={current.deaths_cum}>
-                        óbitos registrados
+                        Óbitos
                     </Kpi>
                 </Grid>
             </Grid>
-            {/* <div style={{ width: "100%", height: 300 }}>
-                <ResponsiveContainer>
-                    <LineChart
-                        width={500}
-                        height={300}
-                        data={chartData}
-                        margin={{
-                            top: 5,
-                            right: 30,
-                            left: 20,
-                            bottom: 5
-                        }}
+            <Card raised={true} className={styles.slider}>
+                <Slider
+                    classes={{
+                        valueLabel: styles.MuiSliderValueLabel,
+                        thumb: styles.MuiSliderThumb
+                    }}
+                    value={epoch}
+                    min={0}
+                    max={diagnosisData.length - 1}
+                    valueLabelDisplay="on"
+                    valueLabelFormat={sliderLabelFormat}
+                    onChange={(ev, value) => setEpoch(value)}
+                />
+            </Card>
+            <div>
+                <h2>Evolução dos Casos</h2>
+                <Typography>
+                    <div
+                        className={styles.chart}
+                        style={{ width: "100%", height: 300 }}
                     >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="date" />
-                        <YAxis />
-                        <Tooltip />
-                        <Legend />
-                        <Line
-                            type="monotone"
-                            dataKey="cases_cum"
-                            stroke="#8884d8"
-                            activeDot={{ r: 1 }}
-                        />
-                    </LineChart>
-                </ResponsiveContainer>
-            </div> */}
+                        <ResponsiveContainer>
+                            <AreaChart
+                                data={chartData}
+                                margin={{
+                                    top: 0,
+                                    right: 0,
+                                    left: 0,
+                                    bottom: 0
+                                }}
+                            >
+                                <defs>
+                                    <linearGradient
+                                        id="colorUv"
+                                        x1="0"
+                                        y1="0"
+                                        x2="0"
+                                        y2="1"
+                                    >
+                                        <stop
+                                            offset="5%"
+                                            stopColor={needleColor}
+                                            stopOpacity={0.8}
+                                        />
+                                        <stop
+                                            offset="95%"
+                                            stopColor={needleColor}
+                                            stopOpacity={0}
+                                        />
+                                    </linearGradient>
+                                </defs>
+                                <XAxis
+                                    dataKey="date"
+                                    type="number"
+                                    domain={["dataMin", "dataMax"]}
+                                    tickFormatter={chartXTickFormat}
+                                />
+                                <YAxis hide={true} />
+                                <Tooltip />
+                                <Area
+                                    data={chartData.filter(
+                                        (d) => d.type == "Real"
+                                    )}
+                                    type="monotone"
+                                    dataKey="cases_cum"
+                                    stroke={needleColor}
+                                    activeDot={{ r: 1 }}
+                                    fill="url(#colorUv)"
+                                />
+                                <Area
+                                    data={chartData.filter(
+                                        (d, key, arr) =>
+                                            d.type == "Previsão" ||
+                                            _.get(arr[key + 1], "type") ==
+                                                "Previsão"
+                                    )}
+                                    type="monotone"
+                                    dataKey="cases_cum"
+                                    stroke={needleColor}
+                                    activeDot={{ r: 1 }}
+                                    fill="url(#colorUv)"
+                                    strokeDasharray="4 4"
+                                />
+                            </AreaChart>
+                        </ResponsiveContainer>
+                    </div>
+                </Typography>
+            </div>
         </div>
     );
 }
