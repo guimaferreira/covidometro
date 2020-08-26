@@ -8,8 +8,18 @@
     "start": "next start"
   },
   "dependencies": {
+    "@material-ui/core": "^4.11.0",
+    "classnames": "^2.2.6",
+    "date-fns": "^2.15.0",
+    "lodash": "^4.17.20",
     "next": "9.5.1",
     "react": "16.13.1",
-    "react-dom": "16.13.1"
+    "react-dom": "16.13.1",
+    "react-gauge-chart-nextjs-support": "git+https://github.com/BossBele/react-gauge-chart.git",
+    "recharts": "^1.8.5",
+    "sass": "^1.26.10"
+  },
+  "devDependencies": {
+    "babel-plugin-styled-components": "^1.11.1"
   }
 }
