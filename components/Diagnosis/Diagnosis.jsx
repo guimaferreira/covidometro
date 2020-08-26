@@ -74,9 +74,10 @@ export default function Diagnosis({}) {
                 animDelay={100}
                 nrOfLevels={5}
                 marginInPercent={0.06}
+                arcPadding={0.02}
                 colors={colors}
                 textColor="#000000"
-                arcWidth={0.3}
+                arcWidth={0.4}
                 cornerRadius={4}
                 percent={current.deaths_gauge}
                 hideText={true}
@@ -88,12 +89,32 @@ export default function Diagnosis({}) {
             </div>
             <Grid container spacing={2}>
                 <Grid item xs={6}>
-                    <Kpi type={current.type} value={current.cases_cum}>
+                    <Kpi type={current.type} value={current.cases_time}>
+                        1 caso a cada
+                    </Kpi>
+                </Grid>
+                <Grid item xs={6}>
+                    <Kpi type={current.type} value={current.deaths_time}>
+                        1 óbito a cada
+                    </Kpi>
+                </Grid>
+            </Grid>
+            <Grid container spacing={2}>
+                <Grid item xs={6}>
+                    <Kpi
+                        type={current.type}
+                        value={current.cases_cum}
+                        rount={true}
+                    >
                         Casos
                     </Kpi>
                 </Grid>
                 <Grid item xs={6}>
-                    <Kpi type={current.type} value={current.deaths_cum}>
+                    <Kpi
+                        type={current.type}
+                        value={current.deaths_cum}
+                        rount={true}
+                    >
                         Óbitos
                     </Kpi>
                 </Grid>
@@ -117,7 +138,7 @@ export default function Diagnosis({}) {
                 <Typography>
                     <div
                         className={styles.chart}
-                        style={{ width: "100%", height: 300 }}
+                        style={{ width: "100%", height: 200 }}
                     >
                         <ResponsiveContainer>
                             <AreaChart
@@ -155,7 +176,10 @@ export default function Diagnosis({}) {
                                     domain={["dataMin", "dataMax"]}
                                     tickFormatter={chartXTickFormat}
                                 />
-                                <YAxis hide={true} />
+                                <YAxis
+                                    hide={true}
+                                    domain={["dataMin", "dataMax"]}
+                                />
                                 <Tooltip />
                                 <Area
                                     data={chartData.filter(
