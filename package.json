@@ -16,6 +16,7 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-gauge-chart-nextjs-support": "git+https://github.com/BossBele/react-gauge-chart.git",
+    "recharts": "^1.8.5",
     "sass": "^1.26.10"
   },
   "devDependencies": {
