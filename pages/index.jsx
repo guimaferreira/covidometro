@@ -3,8 +3,19 @@ import Layout, { appTitle } from "../components/Layout/Layout";
 import TextField from "@material-ui/core/TextField";
 import Diagnosis from "../components/Diagnosis/Diagnosis";
 import styles from "../styles/Home.module.sass";
+import { getCityDiagnosis } from "../lib/cityDiagnosis";
 
-export default function Home({}) {
+export async function getStaticProps() {
+    const diagnosis = await getCityDiagnosis();
+
+    return {
+        props: {
+            diagnosis
+        }
+    };
+}
+
+export default function Home({ diagnosis }) {
     const city = "Cláudio, MG";
     return (
         <Layout>
@@ -21,7 +32,7 @@ export default function Home({}) {
                 />
             </header>
             <section>
-                <Diagnosis city={city} />
+                <Diagnosis city={city} diagnosis={diagnosis} />
             </section>
         </Layout>
     );

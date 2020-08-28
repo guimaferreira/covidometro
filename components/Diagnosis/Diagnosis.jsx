@@ -23,9 +23,10 @@ import Kpi from "../Kpi/Kpi";
 import { Typography } from "@material-ui/core";
 import DateLocal from "../../helpers/DateLocal.helper";
 
-const data = require("../../public/data/mg-claudio.json");
+// const data = require("../../public/data/mg-claudio.json");
 
-export default function Diagnosis({ city }) {
+export default function Diagnosis({ city, diagnosis }) {
+    const data = diagnosis;
     const startIndex = _.findIndex(data, { deaths_cum: 1 }) - 1;
     const diagnosisData = data.slice(startIndex);
 
